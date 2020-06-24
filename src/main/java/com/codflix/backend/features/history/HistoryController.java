@@ -17,7 +17,6 @@ public class HistoryController {
     private final HistoryDao historyDao = new HistoryDao();
     private final UserDao userDao = new UserDao();
 
-
     public String list(Request request, Response res) {
         List<History> histories;
 
