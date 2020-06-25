@@ -81,6 +81,17 @@ public class Media {
         return releaseDate;
     }
 
+    public String getFormatedReleaseDate(){
+        String[] dateSplit = releaseDate.toString().split(" ");
+        StringBuilder dateResult = new StringBuilder();
+        dateResult.append(dateSplit[1]);
+        dateResult.append(" / ");
+        dateResult.append(dateSplit[2]);
+        dateResult.append(" / ");
+        dateResult.append(dateSplit[5]);
+        return dateResult.toString();
+    }
+
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
