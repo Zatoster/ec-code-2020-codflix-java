@@ -48,3 +48,11 @@
     position: relative;
     flex-basis: 100%;
 }
+#media_detail {
+  text-align: left;
+  padding: 10px;
+  margin: auto;
+}
+#pads {
+  padding-bottom: 10px;
+}

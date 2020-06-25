@@ -1,8 +1,15 @@
 #parse("dashboard.html")
 #@mainLayout()
-Medias
 
-<h1>Media Detail</h1>
-<div>$media.getTitle()</div>
+<h1>$media.getTitle()</h1>
+<h2>Media Detail</h2>
+<div id="media_detail">
+
+    <div id="pads"> <b><u>Status</u>:</b> $media.getStatus() $media.getType() </div>
+    <div id="pads"> <b><u>Release date</u>:</b> $media.getReleaseDate() </div>
+    <div id="pads"> <b><u>Summary</u>:</b> $media.getSummary() </div>
+    <a id="pads" href="$media.getTrailerUrl()">See the trailer !</a>
+
+</div>
 
 #end
