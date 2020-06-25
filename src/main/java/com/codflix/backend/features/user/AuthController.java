@@ -7,6 +7,7 @@ import com.codflix.backend.utils.URLUtils;
 import com.google.protobuf.ByteString;
 import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 import javafx.util.converter.ByteStringConverter;
+import org.eclipse.jetty.server.Authentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Request;
@@ -56,9 +57,30 @@ public class AuthController {
         return "OK";
     }
 
-    public String signUp(Request request, Response response) {
-        Map<String, Object> model = new HashMap<>();
-        return Template.render("auth_signup.html", model);
+    public String signUp(Request request, Response response) throws NoSuchAlgorithmException {
+        if (request.requestMethod().equals("GET")) {
+            Map<String, Object> model = new HashMap<>();
+            return Template.render("auth_signup.html", model);
+        }
+
+        // Get parameters
+        Map<String, String> query = URLUtils.decodeQuery(request.body());
+        String email = query.get("email");
+        String password = query.get("password");
+        String confirm_password = query.get("password_confirm");
+
+        if(!password.equals(confirm_password) || email.equals("") || password.equals("")){
+            logger.info("Wrong email or password");
+            response.redirect("/signup");
+            return "KO";
+        }
+
+        byte[] passwordSHA = MessageDigest.getInstance("SHA-256").digest(password.getBytes(StandardCharsets.UTF_8));
+
+        userDao.addUser(email,bytesToHex(passwordSHA).toUpperCase());
+        logger.info("Complete, Please log in");
+        response.redirect("/login");
+        return "OK";
     }
 
     public String logout(Request request, Response response) {
